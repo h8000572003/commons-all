@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+io.github.h800572003.hcp.start.HcpAutoConfiguration
