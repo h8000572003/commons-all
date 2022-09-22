@@ -2,6 +2,10 @@ package io.github.h800572003.concurrent.group;
 
 import java.util.List;
 
+/**
+ * 等比例分配
+ * @param <T>
+ */
 public class SegmentGroupBase<T> implements IClassificationStrategy<T> {
     private int index;
 

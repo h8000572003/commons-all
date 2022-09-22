@@ -1,8 +1,6 @@
 package io.github.h800572003.concurrent;
 
-import io.github.h800572003.concurrent.group.GroupTaskOption;
-import io.github.h800572003.concurrent.group.GroupTaskService;
-import io.github.h800572003.concurrent.group.IGroupTaskService;
+import io.github.h800572003.concurrent.group.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +22,8 @@ class GroupTaskServiceTest {
     IGroupTaskService.IGroupTask<Integer> run;
 
 
-    private  IGroupTaskService groupTaskService;
+    private IGroupTaskService groupTaskService;
+
     @BeforeEach
     void init() {
         run = Mockito.spy(new IGroupTaskService.IGroupTask<Integer>() {
@@ -51,6 +50,20 @@ class GroupTaskServiceTest {
 
 
     }
+    @Test
+    void executeWithKey() {
+        SegmentKeyGroupBase<Integer> integerSegmentKeyGroupBase = new SegmentKeyGroupBase<>(new SegmentKeyGroupBase.SegmentKeyFilter<Integer>() {
+            @Override
+            public String toKey(Integer o) {
+                return o.toString();
+            }
+        }, 3);
+        exe(3, 2, 10,integerSegmentKeyGroupBase);
+
+        Mockito.verify(run, Mockito.times(3)).run(Mockito.anyList());
+
+
+    }
 
     @Test
     void execute100() {
@@ -68,7 +81,7 @@ class GroupTaskServiceTest {
             @Override
             public void run(List<Integer> tasks) {
                 log.info(Thread.currentThread().getName() + " start size:{} :{}", tasks.size(), tasks);
-                    count(100);
+                count(100);
                 log.info(Thread.currentThread().getName() + " end size:{} :{}", tasks.size(), tasks);
             }
         });
@@ -90,12 +103,12 @@ class GroupTaskServiceTest {
 
     }
 
-    void count(int value){
-        if(value<=0){
+    void count(int value) {
+        if (value <= 0) {
 //            log.info("end job");
             return;
-        }else{
-            for(int i=0;i<10000;i++){
+        } else {
+            for (int i = 0; i < 10000; i++) {
                 double random = Math.random();
             }
 //            log.info("run {} job",value);
@@ -103,8 +116,12 @@ class GroupTaskServiceTest {
         }
     }
 
-
     private IGroupTaskService.IGroupTask<Integer> exe(int groupSize, int threadSize, int dataSize) {
+        return this.exe(groupSize, threadSize, dataSize,null );
+    }
+
+
+    private IGroupTaskService.IGroupTask<Integer> exe(int groupSize, int threadSize, int dataSize, IClassificationStrategy classificationStrategy) {
         this.groupTaskService = new GroupTaskService();
         //init task
 
@@ -114,6 +131,13 @@ class GroupTaskServiceTest {
                 .boxed()//
                 .collect(Collectors.toList());//
 
+        IGroup<Integer> group = null;
+        if (classificationStrategy == null) {
+            group = new SegmentGroup<>(collect, groupSize);
+        }else{
+            group = new SegmentGroup<>(collect,classificationStrategy);
+        }
+
 
         GroupTaskOption.GroupTaskOptionBuilder<Integer> groupTaskOptionBuilder = new GroupTaskOption.GroupTaskOptionBuilder();
         GroupTaskOption<Integer> input = groupTaskOptionBuilder
@@ -122,6 +146,7 @@ class GroupTaskServiceTest {
                 .groupSize(groupSize)//
                 .task(run)//
                 .tasks(collect)//
+                .group(group)
                 .build();
 
         //when

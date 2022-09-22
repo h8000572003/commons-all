@@ -2,10 +2,6 @@ package io.github.h800572003.textcut;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,10 +15,24 @@ class TextCutRuleslSeriveTest2 {
 	ITextCutRulesSerive<TextLine> textCutRuleslSerive = new TextCutRuleslSerive<>();
 
 	public TextCutRuleslSeriveTest2() {
-		textCutRuleslSerive.addRule(i -> i.startsWith("ST01"), getST01());
-		textCutRuleslSerive.addRule(i -> i.startsWith("ST02"), getST02());
-		textCutRuleslSerive.addRule(i -> i.startsWith("ST03"), getST03());
 
+		//加入規則
+		textCutRuleslSerive.addRule(TextCutRuleslSeriveTest2::s01, getST01());
+		textCutRuleslSerive.addRule(TextCutRuleslSeriveTest2::s02, getST02());
+		textCutRuleslSerive.addRule(TextCutRuleslSeriveTest2::s03, getST03());
+
+	}
+
+	private static boolean s01(String i) {
+		return i.startsWith("ST01");
+	}
+
+	private static boolean s02(String i) {
+		return i.startsWith("ST02");
+	}
+
+	private static boolean s03(String i) {
+		return i.startsWith("ST03");
 	}
 
 	/**

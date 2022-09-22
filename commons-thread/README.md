@@ -9,6 +9,7 @@
 ### CHANGELOG
 - 0.0.1  加入任務拆分
 - 0.0.2  修改中斷方式，不強制中斷採取
+- 0.0.3  加入(SegmentKeyGroupBase) KEY分組策略
 
 
 
