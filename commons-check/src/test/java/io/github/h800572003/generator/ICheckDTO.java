@@ -1,4 +1,4 @@
-package io.github.h800572003.check;
+package io.github.h800572003.generator;
 
 public interface ICheckDTO {
 

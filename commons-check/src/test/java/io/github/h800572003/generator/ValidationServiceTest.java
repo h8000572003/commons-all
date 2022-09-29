@@ -1,10 +1,10 @@
-package io.github.h800572003.check;
+package io.github.h800572003.generator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-import io.github.h800572003.check.ValidationStrategy.Builder;
+import io.github.h800572003.generator.ValidationStrategy.Builder;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

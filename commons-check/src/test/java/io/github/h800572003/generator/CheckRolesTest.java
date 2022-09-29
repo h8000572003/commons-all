@@ -1,7 +1,6 @@
-package io.github.h800572003.check;
+package io.github.h800572003.generator;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Calendar;
 import java.util.Date;

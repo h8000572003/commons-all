@@ -1,4 +1,4 @@
-package io.github.h800572003.check;//package io.github.h800572003.check;
+package io.github.h800572003.generator;//package io.github.h800572003.check;
 //
 //import static org.assertj.core.api.Assertions.assertThat;
 //
