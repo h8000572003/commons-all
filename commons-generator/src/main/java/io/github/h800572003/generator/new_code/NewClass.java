@@ -11,18 +11,18 @@ import org.apache.commons.lang3.StringUtils;
 public class NewClass implements ICode {
 
     private NewPackage packageCode = new NewPackage(StringUtils.EMPTY);
-    private Imports imports = new Imports();
+    private final Imports imports = new Imports();
 
-    private GroupCode annotations = new GroupCode();
+    private final GroupCode annotations = new GroupCode();
 
     private String protectedValue = Protecteds.PROTECTED.toJavaName();
-    private String name;
+    private final String name;
 
     private String memo = "";
 
-    private GroupCode body = new GroupCode();
+    private final GroupCode body = new GroupCode();
 
-    private MethodArgs constructorArgs = new MethodArgs();
+    private final MethodArgs constructorArgs = new MethodArgs();
 
     public NewClass addAnnotation(NewAnnotation newAnnotation) {
         annotations.add(newAnnotation);

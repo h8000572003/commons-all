@@ -56,15 +56,3 @@ class NewClassTest {
 }
 
 
-@Slf4j
-class Apple{
-
-    Apple(String name){
-
-    }
-
-    public void hello(String helloName) {
-        //TODO
-    }
-//free;
-}

@@ -8,16 +8,16 @@ import org.apache.commons.lang3.StringUtils;
 public class NewMethod implements ICode {
 
     private String protectedValue = Protecteds.PROTECTED.toJavaName();
-    private String name;
-    private String returnType;
+    private final String name;
+    private final String returnType;
 
     private String memo="";
 
-    private GroupCode annotations = new GroupCode();
+    private final GroupCode annotations = new GroupCode();
 
-    private GroupCode body=new GroupCode();
+    private final GroupCode body=new GroupCode();
 
-    private MethodArgs args = new MethodArgs();
+    private final MethodArgs args = new MethodArgs();
 
 
     public NewMethod(Protecteds protectedValue, String name) {

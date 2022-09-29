@@ -12,7 +12,7 @@ import java.util.Objects;
  */
 public class MethodArgs implements ICode {
 
-    private List<MethodArg> methodArgs = new ArrayList<>();
+    private final List<MethodArg> methodArgs = new ArrayList<>();
 
     @Override
     public String get() {
@@ -24,8 +24,8 @@ public class MethodArgs implements ICode {
     }
 
     public static class MethodArg {
-        private String name;
-        private String typeName;
+        private final String name;
+        private final String typeName;
 
         public MethodArg(String typeName, String name) {
             this.name = name;

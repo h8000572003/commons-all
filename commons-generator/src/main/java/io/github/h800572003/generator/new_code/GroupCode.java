@@ -11,7 +11,7 @@ import java.util.Set;
  */
 public class GroupCode implements ICode {
 
-    private Set<ICode> codes=new LinkedHashSet<>();
+    private final Set<ICode> codes=new LinkedHashSet<>();
 
 
     @Override

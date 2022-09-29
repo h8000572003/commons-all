@@ -8,8 +8,8 @@ public class NewField implements ICode {
 
 
     private String protectedValue = Protecteds.PROTECTED.toJavaName();
-    private String name;
-    private String typeName;
+    private final String name;
+    private final String typeName;
 
     private String finalValue="";
     private String value="";

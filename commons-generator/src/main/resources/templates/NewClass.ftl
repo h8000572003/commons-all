@@ -2,7 +2,7 @@
 <#if header!="">
 ${header}
 </#if>
-    ${protectedValue} class ${name}{
+${protectedValue} class ${name}{
 
      ${protectedValue} ${name}(${constructorArgs}){
 
@@ -13,4 +13,4 @@ ${header}
               <#else>
                //TODO
               </#if>
-    }
+}

@@ -4,7 +4,7 @@ import io.github.h800572003.generator.ICode;
 
 public class NewStringLine implements ICode {
 
-    private String body;
+    private final String body;
     private boolean withEndNote = true;
 
     public NewStringLine(String body, boolean withEndNote) {

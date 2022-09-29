@@ -1,5 +1,5 @@
  <#if value!="">
-          ${protectedValue} ${finalValue} ${typeName} ${name}=${value};
-       <#else>
-        ${protectedValue} ${finalValue} ${typeName} ${name};
+    ${protectedValue} ${finalValue} ${typeName} ${name}=${value};
+ <#else>
+    ${protectedValue} ${finalValue} ${typeName} ${name};
 </#if>

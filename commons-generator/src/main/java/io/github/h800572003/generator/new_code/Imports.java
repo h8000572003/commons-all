@@ -5,7 +5,7 @@ import io.github.h800572003.generator.ICode;
 import java.util.Objects;
 
 public class Imports implements ICode {
-    private GroupCode groupCode = new GroupCode();
+    private final GroupCode groupCode = new GroupCode();
 
     public void addImport(Class<?> plass) {
         this.addImport(plass.getName());
@@ -27,7 +27,7 @@ public class Imports implements ICode {
     }
 
     public static class ImportClass implements ICode {
-        private String importString;
+        private final String importString;
 
         public ImportClass(String importString) {
             this.importString = importString;

@@ -4,7 +4,9 @@ import io.github.h800572003.generator.ICode;
 import org.apache.commons.lang3.StringUtils;
 
 public class NewPackage implements ICode {
-    private String packageString="";
+    private final String packageString;
+
+
 
     public NewPackage(String packageString) {
         this.packageString = packageString;

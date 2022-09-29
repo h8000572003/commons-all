@@ -13,7 +13,7 @@ import java.util.List;
 public class NewComment implements ICode {
     private boolean isMultiLine = false;
 
-    private List<String> comments = new ArrayList<>();
+    private final List<String> comments = new ArrayList<>();
 
     public NewComment(boolean isMultiLine, String...comment) {
         this.isMultiLine = isMultiLine;
