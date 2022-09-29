@@ -2,9 +2,9 @@ package io.github.h800572003.generator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import io.github.h800572003.check.*;
 import org.junit.jupiter.api.Test;
 
-import io.github.h800572003.generator.ValidationStrategy.Builder;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -27,7 +27,7 @@ class ValidationServiceTest {
 	}
 
 	public ValidationStrategy<CheckDTO> create() {
-		final Builder<CheckDTO> builder = new Builder<>();
+		final ValidationStrategy.Builder<CheckDTO> builder = new ValidationStrategy.Builder<>();
 		builder.checkContinue(i -> CheckResult.of("X1", "名稱不得空白", () -> CheckRoles.isNotNull(i.getName())));
 		builder.checkContinue(i -> CheckResult.of("X2", "名稱不得空白", () -> CheckRoles.isBetween(i.getName(), 0, 10)));
 		builder.setHandler(t -> {

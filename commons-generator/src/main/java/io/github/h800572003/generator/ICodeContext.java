@@ -7,7 +7,6 @@ import java.util.List;
 
 /**
  * 產生內容
- * @param <T>
  */
 public interface ICodeContext {
     NewFileBuilder createNewFile();

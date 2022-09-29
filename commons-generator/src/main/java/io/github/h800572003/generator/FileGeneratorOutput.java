@@ -1,11 +1,7 @@
 package io.github.h800572003.generator;
 
-import io.github.h800572003.exception.ApBusinessException;
 import io.github.h800572003.generator.new_code.INewFile;
-import io.github.h800572003.generator.new_code.NewClass;
-import io.github.h800572003.generator.new_code.NewFile;
 import io.github.h800572003.generator.utils.CoderUtils;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
@@ -16,7 +12,7 @@ import java.nio.file.Files;
 /**
  * 檔案產出
  */
-@Slf4j
+
 public class FileGeneratorOutput implements NewFileGenerator.IFileGeneratorOutput {
 
     private final String base;

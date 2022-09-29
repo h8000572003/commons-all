@@ -1,8 +1,6 @@
 package io.github.h800572003.generator;
 
 import io.github.h800572003.generator.new_code.INewFile;
-import io.github.h800572003.generator.new_code.NewFile;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +8,7 @@ import java.util.List;
 /**
  * 新檔案產生器
  */
-@Slf4j
+
 public class NewFileGenerator implements ICodeContext, INewFileGenerator {
     /**
      * 檔案產製

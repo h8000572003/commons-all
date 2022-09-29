@@ -20,7 +20,7 @@
         <module>commons-design</module>
         <module>commons-thread</module>
         <module>commons-textcut</module>
-
+        <module>commons-generator</module>
     </modules>
     <name>${project.groupId}:${project.artifactId}</name>
     <packaging>pom</packaging>
