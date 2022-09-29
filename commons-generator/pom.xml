@@ -9,6 +9,7 @@
     <version>0.0.1</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <packaging>jar</packaging>
+    <description>commons-generator</description>
     <url>https://github.com/h8000572003</url>
     <properties>
         <spring-boot.version>2.7.2</spring-boot.version>
@@ -159,7 +160,7 @@
         </developer>
     </developers>
     <scm>
-        <url>git@github.com:h8000572003/commons-all.git</url>
+        <url>git@github.com:h8000572003/coomon-base.git</url>
     </scm>
     <distributionManagement>
         <snapshotRepository>
