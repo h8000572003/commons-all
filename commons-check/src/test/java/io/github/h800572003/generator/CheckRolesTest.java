@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Calendar;
 import java.util.Date;
 
+import io.github.h800572003.check.CheckRoles;
 import org.junit.jupiter.api.Test;
 
 class CheckRolesTest {
