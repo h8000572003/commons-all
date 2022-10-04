@@ -1,13 +1,13 @@
     <#if memo!="">
-    //${memo}
+//${memo}
     </#if>
     <#if header!="">
-    ${header}
+${header}
     </#if>
-    ${protectedValue} ${returnType} ${name}(${args}) {
-       <#if body!="">
-          ${body}
-       <#else>
-        //TODO
-       </#if>
+${protectedValue} ${returnType} ${name}(${args})${exceptions} {
+   <#if body!="">
+   ${body}
+   <#else>
+   //TODO
+   </#if>
     }

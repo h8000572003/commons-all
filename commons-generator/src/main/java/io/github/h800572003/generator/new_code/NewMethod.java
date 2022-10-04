@@ -5,33 +5,37 @@ import io.github.h800572003.generator.contract.Protecteds;
 import io.github.h800572003.generator.utils.FreeMarkerUtils;
 import org.apache.commons.lang3.StringUtils;
 
-public class NewMethod implements ICode {
+public class NewMethod implements IBodyCode {
 
     private String protectedValue = Protecteds.PROTECTED.toJavaName();
     private final String name;
     private final String returnType;
 
-    private String memo="";
+    private String memo = "";
 
     private final GroupCode annotations = new GroupCode();
 
-    private final GroupCode body=new GroupCode();
+    private final GroupCode body = new GroupCode();
 
     private final MethodArgs args = new MethodArgs();
 
+    private final NewExceptions exceptions = new NewExceptions();
+
 
     public NewMethod(Protecteds protectedValue, String name) {
-        this(protectedValue,"void",name);
+        this(protectedValue, "void", name);
     }
 
-    public NewMethod addBody(ICode code){
+    public NewMethod addBody(ICode code) {
         this.body.add(code);
         return this;
     }
-    public NewMethod addBody(String text){
+
+    public NewMethod addBody(String text) {
         this.body.add(new NewStringLine(text));
         return this;
     }
+
     public NewMethod addAnnotation(NewAnnotation newAnnotation) {
         annotations.add(newAnnotation);
         return this;
@@ -43,14 +47,14 @@ public class NewMethod implements ICode {
         this.returnType = returnType;
     }
 
-    public NewMethod addMethodArg(MethodArgs.MethodArg methodArg){
+    public NewMethod addMethodArg(MethodArgs.MethodArg methodArg) {
         this.args.add(methodArg);
         return this;
     }
 
     @Override
     public String get() {
-        return FreeMarkerUtils.toString(getClass().getSimpleName()+".ftl", this);
+        return FreeMarkerUtils.toString(getClass().getSimpleName() + ".ftl", this);
     }
 
 
@@ -81,21 +85,30 @@ public class NewMethod implements ICode {
 
     public String getHeader() {
         final GroupCode body = new GroupCode();
-        if(StringUtils.isNoneBlank(memo)){
-            body.add(new NewComment(true,memo));
+        if (StringUtils.isNoneBlank(memo)) {
+            body.add(new NewComment(true, memo));
         }
         body.add(annotations);
         return body.get();
     }
 
-    public String getBody(){
+    public String getBody() {
         return body.get();
     }
 
 
+    public NewExceptions getExceptions() {
+        return exceptions;
+    }
+
     @Override
     public String toString() {
         return get();
+    }
+
+    public NewMethod addThrow(String throwable) {
+        exceptions.add(throwable);
+        return this;
     }
 }
 

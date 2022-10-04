@@ -2,6 +2,7 @@ package io.github.h800572003.generator.new_code;
 
 import io.github.h800572003.generator.FileGeneratorOutput;
 import io.github.h800572003.generator.ICodeContext;
+import io.github.h800572003.generator.IFileGeneratorOutput;
 import io.github.h800572003.generator.NewFileGenerator;
 import io.github.h800572003.generator.contract.Protecteds;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 @Slf4j
-class NewFileGeneratorTest implements NewFileGenerator.IFileGeneratorOutput {
+class NewFileGeneratorTest implements IFileGeneratorOutput {
     public static final String MEMO = "測試memo";
 
     private void generator(ICodeContext codeContext) {
@@ -53,7 +54,7 @@ class NewFileGeneratorTest implements NewFileGenerator.IFileGeneratorOutput {
     @Test
     void export() {
 
-        NewFileGenerator.IFileGeneratorOutput output = Mockito.spy(this);
+        IFileGeneratorOutput output = Mockito.spy(this);
 
         NewFileGenerator generator = new NewFileGenerator(this::generator, output);
         generator.export();
@@ -66,7 +67,7 @@ class NewFileGeneratorTest implements NewFileGenerator.IFileGeneratorOutput {
     @Disabled
     void exportTest() {
 
-        NewFileGenerator.IFileGeneratorOutput output = new FileGeneratorOutput("./src/main/java");
+        IFileGeneratorOutput output = new FileGeneratorOutput("./src/main/java");
 
         NewFileGenerator generator = new NewFileGenerator(this::generator, output);
         generator.export();

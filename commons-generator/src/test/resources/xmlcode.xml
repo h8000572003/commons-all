@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<cotext>
+
+<newClass>
+    <name>XXXSample</name>
+    <memo>範例程式</memo>
+    <method>
+        <name>hello</name>
+        <name>你好</name>
+        <method>
+            <name>hello</name>
+            <returnType>void</returnType>
+            <arg>
+                <typeName>String</typeName>
+                <typeName>name</typeName>
+            </arg>
+        </method>
+    </method>
+</newClass>
+
+
+</cotext>

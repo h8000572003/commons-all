@@ -13,7 +13,7 @@ import java.nio.file.Files;
  * 檔案產出
  */
 
-public class FileGeneratorOutput implements NewFileGenerator.IFileGeneratorOutput {
+public class FileGeneratorOutput implements IFileGeneratorOutput {
 
     private final String base;
 

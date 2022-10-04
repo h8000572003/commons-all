@@ -23,8 +23,11 @@ class NewFieldTest {
         field.setValue("Mark");
         String s = field.get();
         log.info("s:{}", s.toString());
-        assertThat(s).contains("public  String name=\"Mark\";");
+        assertThat(s).contains("public  String name = \"Mark\";");
     }
+
+
+
 
 
 }

@@ -1,11 +1,16 @@
-## commons-generator
-
-### 共用程式碼產生
+## commons-generator 共用程式碼產生
 
 減少重複性撰寫程式，提供共用元件使用
 
+### CHANGELOG
+
+- 2022.09.29 v.0.0.1
+> 初版
+- 2022.10.03 v.0.0.1
+> 加入策略機制，產生共通結構檔案
 
 ### 建立元件
+
 - NewClass 物件
 - NewAnnontation 標籤
 - NewComment 備註
@@ -13,10 +18,19 @@
 - NewStringLine 任意輸入文字
 - NewMethod 建立方法
 
+###
 
 ### 程式範例(NewFileGeneratorTest)
 
-內容建立
+### 內容建立策略
+
+- SqlGenerator
+
+輸入sql產生對應物件之結果物件
+
+- BaseDTOGenerator
+
+透過程式加入DTO 物件建立
 
 ```java
           newClass
@@ -49,29 +63,34 @@
     }
 ```
 
+### 物件關係圖
 
 ```mermaid
 classDiagram
-    Animal <|-- Duck
-    Animal <|-- Fish
-    Animal <|-- Zebra
-    Animal : +int age
-    Animal : +String gender
-    Animal: +isMammal()
-    Animal: +mate()
-    class Duck{
-      +String beakColor
-      +swim()
-      +quack()
-    }
-    class Fish{
-      -int sizeInFeet
-      -canEat()
-    }
-    class Zebra{
-      +bool is_wild
-      +run()
-    }
-            
+  
+    ICode <|-- INewFile
+    ICode <|-- IBodyCode
+  
+   
+
+    ICode <|-- NewField
+    ICode <|-- NewClass
+    ICode <|-- NewComment
+    ICode <|-- NewAnnontation
+    ICode <|-- NewStringLine
+    ICode <|-- NewMethod
+
+    INewFile <|-- NewFile
+  
 ```
 
+### mavne 依賴
+
+
+```xml
+<dependency>
+        <groupId>io.github.h8000572003</groupId>
+	<artifactId>commons-generator</artifactId>
+	<version>0.0.1</version>
+</dependency>
+```

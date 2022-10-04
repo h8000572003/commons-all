@@ -14,6 +14,9 @@ public class NewField implements ICode {
     private String finalValue="";
     private String value="";
 
+    private boolean isAssign=false;
+
+
 
     public NewField(Protecteds protectedValue, String name, String typeName, boolean isFinal, String value) {
         this.protectedValue = protectedValue.toJavaName();
@@ -30,7 +33,17 @@ public class NewField implements ICode {
 
     @Override
     public String get() {
-        return FreeMarkerUtils.toString(getClass().getSimpleName()+".ftl", this);
+
+        StringBuffer buffer=new StringBuffer();
+        buffer.append(protectedValue+" ");
+        buffer.append(finalValue+" ");
+        buffer.append(typeName+" ");
+        buffer.append(name);
+        if(isAssign){
+            buffer.append(" = "+value);
+        }
+        buffer.append(";");
+        return buffer.toString();
     }
 
     public String getProtectedValue() {
@@ -65,10 +78,16 @@ public class NewField implements ICode {
 
     public NewField setValue(String value) {
         this.value = "\""+value+"\"";
+        this.isAssign=true;
         return this;
     }
     public NewField setValue(int value){
         this.value=value+"";
+        return this;
+    }
+
+    public NewField setAssign(boolean assign) {
+        isAssign = assign;
         return this;
     }
 

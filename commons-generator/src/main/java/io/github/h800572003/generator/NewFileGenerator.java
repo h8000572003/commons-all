@@ -10,20 +10,6 @@ import java.util.List;
  */
 
 public class NewFileGenerator implements ICodeContext, INewFileGenerator {
-    /**
-     * 檔案產製
-     */
-    public interface IFileGeneratorOutput {
-        void export(NewFileGenerator newFileGenerator);
-    }
-
-    /**
-     * 程式碼產製
-     */
-    public interface ICodeGenerator {
-        void generator(ICodeContext codeContext);
-
-    }
 
     private final ICodeGenerator generator;//產生器
     private final List<INewFile> newFiles = new ArrayList<>();//產製檔案

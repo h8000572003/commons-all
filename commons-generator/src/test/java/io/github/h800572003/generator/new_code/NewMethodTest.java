@@ -39,7 +39,7 @@ class NewMethodTest {
         log.info("method:{}", method.get());
 
         //THEN
-        assertThat(s).contains(" //myMemo");
+        assertThat(s).contains("myMemo");
     }
 
     @Test
@@ -80,4 +80,13 @@ class NewMethodTest {
         log.info("method:{}", method.get());
         assertThat(s).contains("@Test");
     }
+
+    @Test
+    void withThrow() {
+        method.addThrow("IOException");
+        String s = method.get();
+        log.info("method:{}", method.get());
+        assertThat(s).contains("void hello()throws IOException {");
+    }
+
 }

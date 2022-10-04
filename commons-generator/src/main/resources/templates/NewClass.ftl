@@ -2,15 +2,15 @@
 <#if header!="">
 ${header}
 </#if>
-${protectedValue} class ${name}{
+${protectedValue} class ${name} ${extend}  ${implement}{
+    <#if constructorArgs!="">
+      ${protectedValue} ${name}(${constructorArgs}){
 
-     ${protectedValue} ${name}(${constructorArgs}){
-
-     }
-
-        <#if body!="">
-                 ${body}
-              <#else>
-               //TODO
-              </#if>
+      }
+    </#if>
+    <#if body!="">
+${body}
+    <#else>
+//TODO
+    </#if>
 }
