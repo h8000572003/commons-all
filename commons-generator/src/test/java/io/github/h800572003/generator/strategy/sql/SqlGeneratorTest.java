@@ -19,6 +19,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SqlGeneratorTest {
     StringGeneratorOutput output = new StringGeneratorOutput();
 
+
+
     @Test
     void generator() throws ClassNotFoundException {
         final SqlGenerator sqlGenerator = createSql();

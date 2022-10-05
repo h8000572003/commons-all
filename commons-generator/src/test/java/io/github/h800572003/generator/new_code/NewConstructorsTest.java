@@ -19,11 +19,11 @@ class NewConstructorsTest {
 
 
                 .addBody("//STEP1")
-                .addBody("//STEP2").getRoot()
+                .addBody("//STEP2").getPrevious()
                 .createArgs()
                 .add("String","name")
                 .addBody("//SEC2")
-                .getRoot();
+                .getPrevious();
 
 
         String code = root.toString();

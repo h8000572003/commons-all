@@ -30,6 +30,7 @@ public class NewImplements implements ICode {
         return this;
     }
 
+
     public static class NewImplement implements ICode {
 
         private NewStringLine stringLine;

@@ -25,9 +25,9 @@ class NewFileGeneratorTest implements IFileGeneratorOutput {
                 .getNewClass().setPackage("io.github.h800572003.sample")//
                 .addImport(NewClassTest.class.getName())//
                 .addImport(NewClass.class.getName())//
-                .addBody("//TODO;")
+                .addBody("//TODO")
                 .addBody(new NewField(Protecteds.PUBLIC, "name", "String").setFinal(false))
-                .addBody(new NewMethod(Protecteds.PUBLIC, "hello")//
+                .addBody(new NewMethods.NewMethod(Protecteds.PUBLIC, "hello",null)//
                         .addMethodArg(new MethodArgs.MethodArg("String", "helloName")))//
                 .setMemo(MEMO)//
                 .addAnnotation(new NewAnnotation("@Slf4j"))
@@ -43,8 +43,10 @@ class NewFileGeneratorTest implements IFileGeneratorOutput {
                 .addImport(NewClass.class.getName())//
                 .addBody("//TODO;")
                 .addBody(new NewField(Protecteds.PUBLIC, "name", "String").setFinal(false))
-                .addBody(new NewMethod(Protecteds.PUBLIC, "hello")//
-                        .addMethodArg(new MethodArgs.MethodArg("String", "helloName")))//
+                .createNewMethods()
+                .createMethod(Protecteds.PUBLIC, "hello")
+                .addMethodArg(new MethodArgs.MethodArg("String", "helloName"))
+                .getPrevious().getPrevious()
                 .setMemo(MEMO)//
                 .addAnnotation(new NewAnnotation("@Slf4j"))
                 .addConstructorArg(new MethodArgs.MethodArg("String", "name"));

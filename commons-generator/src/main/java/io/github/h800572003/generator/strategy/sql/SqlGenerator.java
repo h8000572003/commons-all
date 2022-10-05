@@ -2,12 +2,8 @@ package io.github.h800572003.generator.strategy.sql;
 
 import io.github.h800572003.generator.ICodeContext;
 import io.github.h800572003.generator.ICodeGenerator;
-import io.github.h800572003.generator.NewFileBuilder;
 import io.github.h800572003.generator.contract.Protecteds;
-import io.github.h800572003.generator.new_code.MethodArgs;
-import io.github.h800572003.generator.new_code.NewClass;
-import io.github.h800572003.generator.new_code.NewMethod;
-import io.github.h800572003.generator.new_code.NewStringLine;
+import io.github.h800572003.generator.new_code.*;
 import io.github.h800572003.generator.strategy.basedtogenerator.BaseDTOGenerator;
 import io.github.h800572003.generator.strategy.basedtogenerator.BaseGenDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +27,7 @@ public class SqlGenerator implements ICodeGenerator {
 
     private final IJavaColumnResolver javaColumnResolver;
 
-    BaseDTOGenerator baseDTOGenerator = new BaseDTOGenerator();
+    private final BaseDTOGenerator baseDTOGenerator = new BaseDTOGenerator();
 
     private Map<String, String> rowMapper = new HashMap<>();
 
@@ -86,21 +82,22 @@ public class SqlGenerator implements ICodeGenerator {
             }
             baseDTOGenerator.generator(codeContext);//產生DTO
 
-            NewMethod newMethod = createMapRowMethod(baseGenDTOs);
-            final NewClass newClass = codeContext.createNewFile()//
+
+            final NewFile newFile = codeContext.createNewFile()//
                     .setProtectedValue(Protecteds.PUBLIC)//
                     .setName(dto.getName() + "RowMapper")//
-                    .build()//建立新檔案
+                    .build();//建立新檔案
+            NewMethods.NewMethod newMethod = createMapRowMethod(baseGenDTOs, newFile);
 
-                    .getNewClass()//
-
+            newFile.getNewClass()//
                     .setPackage(dto.getPackageValue())
                     .setMemo(dto.getMemo())
                     .addImport(RowMapper.class.getName())
                     .addImport(SQLException.class.getName())
-                    .addImport(ResultSet.class.getName() )
+                    .addImport(ResultSet.class.getName())
                     .addImport(dto.getPackageValue() + "." + dto.getName())
                     .addImplements(String.format("RowMapper<%s>", dto.getName()))
+
                     .addBody(newMethod);
 
             //
@@ -113,11 +110,11 @@ public class SqlGenerator implements ICodeGenerator {
 
     }
 
-    private NewMethod createMapRowMethod(List<BaseGenDTO> baseGenDTOs) {
-        NewMethod newMethod = new NewMethod(Protecteds.PUBLIC, dto.getName(), "mapRow")
+    private NewMethods.NewMethod createMapRowMethod(List<BaseGenDTO> baseGenDTOs, NewFile newFile) {
+        NewMethods.NewMethod newMethod = new NewMethods.NewMethod(Protecteds.PUBLIC, dto.getName(), "mapRow", null)
                 .addThrow("SQLException")
-        .addMethodArg(new MethodArgs.MethodArg("ResultSet","rs"))
-        .addMethodArg(new MethodArgs.MethodArg("int","rowNum"))
+                .addMethodArg(new MethodArgs.MethodArg("ResultSet", "rs"))
+                .addMethodArg(new MethodArgs.MethodArg("int", "rowNum"))
                 .addBody(dto.getName() + " target = new " + dto.getName() + "()");
         for (BaseGenDTO baseGenDTO : baseGenDTOs) {
             String format = String.format("target.set%s(rs.%s(\"%s\"))",

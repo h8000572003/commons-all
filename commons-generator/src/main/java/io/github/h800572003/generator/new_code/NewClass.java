@@ -14,7 +14,9 @@ import java.util.List;
 public class NewClass implements ICode {
 
 
-
+    public NewMethods createNewMethods() {
+        return methods;
+    }
 
     public enum NewClassType{
         ABSTRACT("abstract class"),//
@@ -46,6 +48,7 @@ public class NewClass implements ICode {
 
     private final NewConstructors newConstructors;
 
+    private final NewMethods methods=new NewMethods(this);
 
     private String protectedValue = Protecteds.PROTECTED.toJavaName();
     private final String name;
@@ -68,6 +71,8 @@ public class NewClass implements ICode {
         NewConstructors.NewConstructorGroup args = newConstructors.createArgs();
         return args;
     }
+
+
 
     public NewClass addBody(ICode code) {
 
@@ -113,8 +118,11 @@ public class NewClass implements ICode {
         buffer.append(implement+" ");
         buffer.append("{\n");
         buffer.append(newConstructors.toString()+"\n");
+
         buffer.append(body.get());
-        buffer.append("}");
+
+
+        buffer.append("}\n");
 
 //        return FreeMarkerUtils.toString(getClass().getSimpleName() + ".ftl", this);
         return buffer.toString();

@@ -20,7 +20,7 @@ public class NewConstructors implements ICode {
         this.name = name;
         this.newClass=newClass;
     }
-    public NewClass getRoot(){
+    public NewClass getPrevious(){
         return this.newClass;
     }
 
@@ -41,9 +41,7 @@ public class NewConstructors implements ICode {
         constructors.add(newConstructorGroup);
         return newConstructorGroup;
     }
-    public NewClass backNewClass(){
-        return this.newClass;
-    }
+
 
 
 
@@ -60,7 +58,7 @@ public class NewConstructors implements ICode {
             this.root = root;
         }
 
-        public NewConstructors getRoot() {
+        public NewConstructors getPrevious() {
             return root;
         }
 
@@ -94,9 +92,6 @@ public class NewConstructors implements ICode {
         public String toString() {
             return this.get();
         }
-        public NewClass backNewClass(){
-            return this.root.newClass;
-        }
 
     }
 
@@ -112,7 +107,7 @@ public class NewConstructors implements ICode {
             this.root = root;
         }
 
-        public NewConstructors getRoot() {
+        public NewConstructors getPrevious() {
             return root;
         }
 
@@ -125,9 +120,7 @@ public class NewConstructors implements ICode {
         public String toString() {
             return this.get();
         }
-        public NewClass backNewClass(){
-            return this.root.newClass;
-        }
+
 
     }
 }

@@ -11,6 +11,7 @@ import java.util.List;
 public interface ICodeContext {
     NewFileBuilder createNewFile();
 
+
     /**
      * 加入newFile
      * @param newFile

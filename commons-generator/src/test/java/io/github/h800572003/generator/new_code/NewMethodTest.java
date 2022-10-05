@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 class NewMethodTest {
-    NewMethod method = new NewMethod(Protecteds.PROTECTED, "hello");
+    NewMethods.NewMethod method = new NewMethods.NewMethod(Protecteds.PROTECTED, "hello",null);
 
     /**
      * 測試沒有說明與沒有參數

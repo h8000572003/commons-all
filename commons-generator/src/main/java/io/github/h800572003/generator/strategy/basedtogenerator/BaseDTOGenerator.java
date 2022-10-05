@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * 基礎DTO產生
@@ -22,13 +21,15 @@ public class BaseDTOGenerator implements ICodeGenerator {
     private String packageValue;
 
 
-    private Set<String>imports=new LinkedHashSet<>();
+    private Set<String> imports = new LinkedHashSet<>();
 
     private List<BaseGenDTO> baseGenDTOs = new ArrayList<>();
 
+    private NewClass newClass;
+
     @Override
     public void generator(ICodeContext codeContext) {
-        final NewClass newClass = codeContext.createNewFile()//
+        this.newClass = codeContext.createNewFile()//
                 .setProtectedValue(Protecteds.PUBLIC)//
                 .setName(name)//
                 .build()//建立新檔案
@@ -38,7 +39,7 @@ public class BaseDTOGenerator implements ICodeGenerator {
                 .setPackage(packageValue)
                 .setMemo(memo);//
 
-        for(String importString:imports){
+        for (String importString : imports) {
             newClass.addImport(importString);
         }
 
@@ -50,20 +51,19 @@ public class BaseDTOGenerator implements ICodeGenerator {
     private void addSet(NewClass newClass) {
         for (final BaseGenDTO baseGenDTO : baseGenDTOs) {
             newClass.addBody(new NewComment(false, baseGenDTO.getMemo()));
-          final NewMethod newMethod=new NewMethod(Protecteds.PUBLIC,"void","set"+ StringUtils.capitalize(baseGenDTO.getName()))//
-                  .addMethodArg(new MethodArgs.MethodArg(baseGenDTO.getType(),baseGenDTO.getName()));
-            newMethod.addBody("this."+baseGenDTO.getName() +"="+baseGenDTO.getName());
-            newClass.addBody(newMethod);
+            newClass.createNewMethods()
+                    .createMethod(Protecteds.PUBLIC, "set" + StringUtils.capitalize(baseGenDTO.getName()))
+                    .addMethodArg(new MethodArgs.MethodArg(baseGenDTO.getType(), baseGenDTO.getName()))
+                    .addBody("this." + baseGenDTO.getName() + "=" + baseGenDTO.getName());
         }
     }
 
     private void addGet(NewClass newClass) {
         for (final BaseGenDTO baseGenDTO : baseGenDTOs) {
             newClass.addBody(new NewComment(false, baseGenDTO.getMemo()));
-            final NewMethod newMethod=new NewMethod(Protecteds.PUBLIC,baseGenDTO.getType(),"get"+ StringUtils.capitalize(baseGenDTO.getName()));//
-            newMethod.addBody("return this."+baseGenDTO.getName() );
-
-            newClass.addBody(newMethod);
+            newClass.createNewMethods()
+                    .createMethod(Protecteds.PUBLIC, baseGenDTO.getType(), "get" + StringUtils.capitalize(baseGenDTO.getName()))
+                    .addBody("return this." + baseGenDTO.getName());
         }
     }
 
@@ -100,7 +100,7 @@ public class BaseDTOGenerator implements ICodeGenerator {
         this.packageValue = packageValue;
     }
 
-    public void add(BaseGenDTO baseGenDTO){
+    public void add(BaseGenDTO baseGenDTO) {
         this.baseGenDTOs.add(baseGenDTO);
     }
 
@@ -114,5 +114,9 @@ public class BaseDTOGenerator implements ICodeGenerator {
 
     public Set<String> getImports() {
         return imports;
+    }
+
+    public NewClass getNewClass() {
+        return newClass;
     }
 }

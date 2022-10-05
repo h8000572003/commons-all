@@ -20,12 +20,25 @@ class NewClassTest {
 //
                 .createNewConstructors()
                 .add("String", "name")
-                .backNewClass()
+                .addBody("//待撰寫")
+                .getPrevious()//
+                //第二組
+                .createArgs().add("int","age")
+                .addBody("//TOD")
+                .getPrevious()
+                .getPrevious()
 
-                .addBody(//內容
-                        new NewMethod(Protecteds.PUBLIC, "hello")//
-                                .addMethodArg(new MethodArgs.MethodArg("String", "helloName")))//
-                .addBody(new NewStringLine("//free"))
+
+
+
+                .createNewMethods()
+                .createMethod(Protecteds.PUBLIC, "hello")
+                .addMethodArg(new MethodArgs.MethodArg("String", "helloName"))//
+                .addBody("//free")
+                .setMemo(MEMO)
+                .getPrevious()//
+                .getPrevious()//
+
 
                 .setMemo(MEMO)//
                 .addAnnotation(new NewAnnotation("@Slf4j"))
@@ -78,6 +91,7 @@ class NewClassTest {
         log.info("code:{}", code);
         assertThat(code).contains("class Apple extends Object");
     }
+
 
 }
 

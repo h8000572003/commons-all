@@ -1,6 +1,7 @@
 package io.github.h800572003.generator;
 
 import io.github.h800572003.generator.contract.Protecteds;
+import io.github.h800572003.generator.new_code.INewFile;
 import io.github.h800572003.generator.new_code.NewFile;
 
 public class NewFileBuilder {
@@ -25,16 +26,20 @@ public class NewFileBuilder {
         return this;
     }
 
-    public NewFile build() {
-        if(protectedValue==null){
-            throw new NewFileException("new class.protectedValue is necessary ");
-        }
-        if(name==null){
-            throw new NewFileException("new class.name is necessary ");
-        }
-        NewFile newFile = new NewFile(this);
+    public INewFile addRootFile(INewFile newFile) {
         this.context.addNewFile(newFile);
         return newFile;
+    }
+
+    public NewFile build() {
+        if (protectedValue == null) {
+            throw new NewFileException("new class.protectedValue is necessary ");
+        }
+        if (name == null) {
+            throw new NewFileException("new class.name is necessary ");
+        }
+        final NewFile newFile = new NewFile(this);
+        return (NewFile) this.addRootFile(newFile);
     }
 
     public Protecteds getProtectedValue() {
