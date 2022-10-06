@@ -5,8 +5,11 @@
 ### CHANGELOG
 
 - 2022.09.29 v.0.0.1
+
 > 初版
+
 - 2022.10.03 v.0.0.2
+
 > 加入策略機制，產生共通結構檔案
 
 ### 建立元件
@@ -17,8 +20,6 @@
 - NewField 欄位
 - NewStringLine 任意輸入文字
 - NewMethod 建立方法
-
-###
 
 ### 程式範例(NewFileGeneratorTest)
 
@@ -69,10 +70,7 @@
 classDiagram
   
     ICode <|-- INewFile
-    ICode <|-- IBodyCode
-  
-   
-
+    ICode *-- ICode : 組合
     ICode <|-- NewField
     ICode <|-- NewClass
     ICode <|-- NewComment
@@ -86,11 +84,10 @@ classDiagram
 
 ### mavne 依賴
 
-
 ```xml
 <dependency>
         <groupId>io.github.h8000572003</groupId>
 	<artifactId>commons-generator</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.ㄉ2</version>
 </dependency>
 ```
