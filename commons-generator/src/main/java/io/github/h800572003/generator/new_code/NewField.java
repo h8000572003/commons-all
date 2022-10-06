@@ -34,6 +34,8 @@ public class NewField implements ICode {
     @Override
     public String get() {
 
+
+
         StringBuffer buffer=new StringBuffer();
         buffer.append(protectedValue+" ");
         buffer.append(finalValue+" ");
@@ -45,6 +47,8 @@ public class NewField implements ICode {
         buffer.append(";");
         return buffer.toString();
     }
+
+
 
     public String getProtectedValue() {
         return protectedValue;

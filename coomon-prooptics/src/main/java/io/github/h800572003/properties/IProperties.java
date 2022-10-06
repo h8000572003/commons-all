@@ -2,11 +2,6 @@ package io.github.h800572003.properties;
 
 import org.apache.commons.lang3.StringUtils;
 
-/**
- * 
- * @author andy tsai
- *
- */
 public interface IProperties {
 	String getKey();
 

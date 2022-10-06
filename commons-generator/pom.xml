@@ -27,7 +27,7 @@
         <coomon-base.version>0.0.1</coomon-base.version>
         <mybatis-generator-core.version>1.4.0</mybatis-generator-core.version>
         <assertj-core.version>3.23.1</assertj-core.version>
-        <mockito-all.version>1.10.19</mockito-all.version>
+<!--        <mockito-all.version>1.7</mockito-all.version>-->
         <lombok.version>1.18.22</lombok.version>
         <freemarker.version>2.3.31</freemarker.version>
         <guava.version>30.0-jre</guava.version>
@@ -64,11 +64,17 @@
             <version>${guava.version}</version>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>org.mockito</groupId>-->
+<!--            <artifactId>mockito-all</artifactId>-->
+<!--            <scope>test</scope>-->
+<!--            <version>${mockito-all.version}</version>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <scope>test</scope>
-            <version>${mockito-all.version}</version>
+            <artifactId>mockito-core</artifactId>
+            <version>4.8.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
         <dependency>

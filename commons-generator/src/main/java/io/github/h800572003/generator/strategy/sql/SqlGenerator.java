@@ -3,19 +3,18 @@ package io.github.h800572003.generator.strategy.sql;
 import io.github.h800572003.generator.ICodeContext;
 import io.github.h800572003.generator.ICodeGenerator;
 import io.github.h800572003.generator.contract.Protecteds;
-import io.github.h800572003.generator.new_code.*;
+import io.github.h800572003.generator.new_code.MethodArgs;
+import io.github.h800572003.generator.new_code.NewFile;
+import io.github.h800572003.generator.new_code.NewMethods;
 import io.github.h800572003.generator.strategy.basedtogenerator.BaseDTOGenerator;
 import io.github.h800572003.generator.strategy.basedtogenerator.BaseGenDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.core.RowMapper;
 
-import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 public class SqlGenerator implements ICodeGenerator {
@@ -29,21 +28,19 @@ public class SqlGenerator implements ICodeGenerator {
 
     private final BaseDTOGenerator baseDTOGenerator = new BaseDTOGenerator();
 
-    private Map<String, String> rowMapper = new HashMap<>();
+    private final IJavaResultSetResolver javaResultSetResolver;
+
 
     public SqlGenerator(SqlGeneratorDTO dto) {
-        this(dto, new JavaTypeResolver(), new JavaColumnResolver());
-    }
-
-    public void addRowMapper(String type, String value) {
-        rowMapper.put(type, value);
+        this(dto, new JavaTypeResolver(), new JavaColumnResolver(), new JavaResultSetResolver());
     }
 
 
-    public SqlGenerator(SqlGeneratorDTO dto, ITypeResolver resolver, IJavaColumnResolver javaColumnResolver) {
+    public SqlGenerator(SqlGeneratorDTO dto, ITypeResolver resolver, IJavaColumnResolver javaColumnResolver, IJavaResultSetResolver javaResultSetResolver) {
         this.dto = dto;
         this.resolver = resolver;
         this.javaColumnResolver = javaColumnResolver;
+        this.javaResultSetResolver = javaResultSetResolver;
 
 
         baseDTOGenerator.setMemo(dto.getMemo());
@@ -51,62 +48,49 @@ public class SqlGenerator implements ICodeGenerator {
         baseDTOGenerator.setName(dto.getName());
 
 
-        initJavaMapper();
     }
 
-    private void initJavaMapper() {
-        rowMapper.put(BigDecimal.class.getName(), "getBigDecimal");
-
-        rowMapper.put(Integer.class.getName(), "getInt");
-        rowMapper.put(int.class.getName(), "getInt");
-
-        rowMapper.put(long.class.getName(), "getLong");
-        rowMapper.put(Long.class.getName(), "getLong");
-
-        rowMapper.put(Short.class.getName(), "getBigDecimal");
-
-        rowMapper.put(Number.class.getName(), "getBigDecimal");
-
-        rowMapper.put(Blob.class.getName(), "getBlob");
-        rowMapper.put(String.class.getName(), "getString");
-    }
 
     @Override
     public void generator(ICodeContext codeContext) {
-        try (Connection connection = dto.getDataSource().getConnection()) {
-            List<BaseGenDTO> baseGenDTOs = new ArrayList<>();
-            try (Statement statement = connection.createStatement()) {
-                baseGenDTOs = getColmuns(statement);
-                addColumns(baseGenDTOs);
-                createImport(baseGenDTOs);
-            }
-            baseDTOGenerator.generator(codeContext);//產生DTO
+        final List<BaseGenDTO> baseGenDTOs = getBaseGenDTOS();
+        createDTOFile(codeContext, baseGenDTOs);
+        createMapperFile(codeContext, baseGenDTOs);
 
 
-            final NewFile newFile = codeContext.createNewFile()//
-                    .setProtectedValue(Protecteds.PUBLIC)//
-                    .setName(dto.getName() + "RowMapper")//
-                    .build();//建立新檔案
-            NewMethods.NewMethod newMethod = createMapRowMethod(baseGenDTOs, newFile);
+    }
 
-            newFile.getNewClass()//
-                    .setPackage(dto.getPackageValue())
-                    .setMemo(dto.getMemo())
-                    .addImport(RowMapper.class.getName())
-                    .addImport(SQLException.class.getName())
-                    .addImport(ResultSet.class.getName())
-                    .addImport(dto.getPackageValue() + "." + dto.getName())
-                    .addImplements(String.format("RowMapper<%s>", dto.getName()))
+    private void createMapperFile(ICodeContext codeContext, List<BaseGenDTO> baseGenDTOs) {
+        final NewFile newFile = codeContext.createNewFile()//
+                .setProtectedValue(Protecteds.PUBLIC)//
+                .setName(dto.getName() + "RowMapper")//
+                .build();//建立新檔案
+        final NewMethods.NewMethod newMethod = createMapRowMethod(baseGenDTOs, newFile);
+        newFile.getNewClass()//
+                .setPackage(dto.getPackageValue())
+                .setMemo(dto.getMemo())
+                .addImport(RowMapper.class.getName())
+                .addImport(SQLException.class.getName())
+                .addImport(ResultSet.class.getName())
+                .addImport(dto.getPackageValue() + "." + dto.getName())
+                .addImplements(String.format("RowMapper<%s>", dto.getName()))
 
-                    .addBody(newMethod);
+                .addBody(newMethod);
+    }
 
-            //
+    private void createDTOFile(ICodeContext codeContext, List<BaseGenDTO> baseGenDTOs) {
+        addColumns(baseGenDTOs);
+        createImport(baseGenDTOs);
+        this.baseDTOGenerator.generator(codeContext);//產生DTO
+    }
 
-
+    private List<BaseGenDTO> getBaseGenDTOS() {
+        try (Connection connection = dto.getDataSource().getConnection();
+             final Statement statement = connection.createStatement()) {
+            return getColmuns(statement);
         } catch (Exception e) {
-            log.info("sql", e);
+            throw new SqlGeneratorException("sql:" + dto.getSql(), e);
         }
-
 
     }
 
@@ -130,8 +114,8 @@ public class SqlGenerator implements ICodeGenerator {
     }
 
     private String getRowMapperOrDefault(BaseGenDTO baseGenDTO) {
-        String defaultValue = "getObject";
-        return rowMapper.getOrDefault(baseGenDTO.getTypeClass(), defaultValue);
+        return this.javaResultSetResolver.getMethod(baseGenDTO.getTypeClass());
+
     }
 
     private void addColumns(List<BaseGenDTO> baseGenDTOs) {
