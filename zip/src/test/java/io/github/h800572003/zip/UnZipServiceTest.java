@@ -1,9 +1,6 @@
 package io.github.h800572003.zip;
 
-import io.github.h800572003.zip.upzip.IRemoveStrategy;
-import io.github.h800572003.zip.upzip.IUnZipService;
-import io.github.h800572003.zip.upzip.UnZipService;
-import io.github.h800572003.zip.upzip.UnZipStrategy;
+import io.github.h800572003.zip.upzip.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -32,33 +29,10 @@ class UnZipServiceTest {
     }
 
 
-    boolean filte(String name) {
-        List<String> fileNames = new ArrayList<>();
-        fileNames.add("DS_Store");
-        fileNames.add("_MACOSX");
-        for(String file:fileNames){
-            if(name.contains(file)){
-                return false;
-            }
-        }
-
-
-        return true;
-    }
-
     void unZip(IRemoveStrategy removeStrategy, String name, int wantedNumberOfInvocations) throws IOException {
         //GIVE ZIP
         try (final InputStream inputStream = UnZipServiceTest.class.getResourceAsStream(name)) {
-            this.service.execute(inputStream, context -> {
-                for (IZip zip : context.getZips(this::filte)) {
-                    if (zip.isDir()) {
-                        //pass
-                    } else {
-                        log.info("file name:{} size:{}", zip.getName(),zip.getSize());
-                        zip.remove(removeStrategy);
-                    }
-                }
-            });
+            this.service.execute(inputStream, new AllFileUnZipStrategy(removeStrategy, this::filte));
         } catch (Exception e) {
             log.error("e:{}", name, e);
 
@@ -67,8 +41,17 @@ class UnZipServiceTest {
 
     }
 
-    static UnZipStrategy
-
+    boolean filte(String name) {
+        List<String> fileNames = new ArrayList<>();
+        fileNames.add("DS_Store");
+        fileNames.add("_MACOSX");
+        for (String file : fileNames) {
+            if (name.contains(file)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 
 }
